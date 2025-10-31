@@ -12,41 +12,34 @@ find_package(ament_cmake REQUIRED)
 
 list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-
-# if(NOT EIGEN3_INCLUDE_DIR)
-#   find_path(EIGEN3_INCLUDE_DIR Eigen/Core
-#     PATHS /usr/include/eigen3
-#           # /usr/local/include/eigen3
-#   )
-# endif()
-
-# if(EIGEN3_INCLUDE_DIR)
-#   message(STATUS "Found Eigen3 in ${EIGEN3_INCLUDE_DIR}")
-#   include_directories(${EIGEN3_INCLUDE_DIR})
-# else()
-#   message(FATAL_ERROR "Eigen3 not found. Please check your installation.")
-# endif()
-
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
-# find_package(eigen3_cmake_module REQUIRED)
 find_package(hebi_cpp_api)
-# find_package(Eigen3 REQUIRED)
 
 add_executable(command_position src/command_position.cpp)
-ament_target_dependencies(command_position
+add_executable(command_velocity src/command_velocity.cpp)
+
+ament_target_dependencies(
+  command_position
   rclcpp
   std_msgs
   hebi_cpp_api
-  # Eigen3
 )
-# target_include_directories(command_position PRIVATE
-#   ${EIGEN3_INCLUDE_DIR}
-# )
+ament_target_dependencies(
+  command_velocity
+  rclcpp
+  std_msgs
+  hebi_cpp_api
+)
 
 install(TARGETS
   command_position
+  command_velocity
   DESTINATION lib/${PROJECT_NAME}
+)
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 if(BUILD_TESTING)

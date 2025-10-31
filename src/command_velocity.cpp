@@ -10,11 +10,11 @@ using namespace hebi;
 class Node_Class : public rclcpp::Node{
     public:
         // コンストラクタ
-        Node_Class() : Node("command_position"), positions(1)
+        Node_Class() : Node("command_velocity"), cmd_velocity(1)
         {
             // サブスクライバの作成
             sub_cmd_ = this->create_subscription<std_msgs::msg::Float64>(
-                "cmd_position", 10,
+                "cmd_velocity", 10,
                 std::bind(&Node_Class::subscribe_callback_cmd,this, std::placeholders::_1)
             );
 
@@ -43,23 +43,23 @@ class Node_Class : public rclcpp::Node{
     private:
         // メンバ変数の定義
         rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr sub_cmd_;
-        std_msgs::msg::Float64 cmd_position;
+        // std_msgs::msg::Float64 cmd_position;
         Lookup lookup_;
         std::shared_ptr<Group> group;
         rclcpp::TimerBase::SharedPtr timer_cmd_;
-        Eigen::VectorXd positions;
+        Eigen::VectorXd cmd_velocity;
         std::string family_name, actuator_name;
 
         // Callback function of subscriber
         void subscribe_callback_cmd(const std_msgs::msg::Float64 msg){
-            positions[0] = msg.data;
+            cmd_velocity[0] = msg.data;
 
         }
 
         // Timer of motion command
         void timer_cmd_callback(){
             GroupCommand group_command(group->size());
-            group_command.setPosition(positions);
+            group_command.setVelocity(cmd_velocity);
             group->sendCommand(group_command);
         }
 };

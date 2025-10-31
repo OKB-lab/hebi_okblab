@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="name_family" default="R8-16"/>
+    <arg name="name_actuator" default="R8-00552"/>
+
+    <node pkg="hebi_okblab" exec="command_velocity" name="command_velocity" output="screen">
+        <param name="name_family" value="$(var name_family)"/>
+        <param name="name_actuator" value="$(var name_actuator)"/>
+    </node>
+</launch>
