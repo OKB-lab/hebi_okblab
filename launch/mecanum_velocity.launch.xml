@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="name_family" default="mecanum"/>
+    <arg name="name_actuator_1" default="w1"/>
+    <arg name="name_actuator_2" default="w2"/>
+    <arg name="name_actuator_3" default="w3"/>
+    <arg name="name_actuator_4" default="w4"/>
+
+    <node pkg="hebi_okblab" exec="command_velocity" name="command_velocity" namespace="w1" output="screen">
+        <param name="name_family" value="$(var name_family)"/>
+        <param name="name_actuator" value="$(var name_actuator_1)"/>
+    </node>
+
+    <node pkg="hebi_okblab" exec="command_velocity" name="command_velocity" namespace="w2" output="screen">
+        <param name="name_family" value="$(var name_family)"/>
+        <param name="name_actuator" value="$(var name_actuator_2)"/>
+    </node>
+
+    <node pkg="hebi_okblab" exec="command_velocity" name="command_velocity" namespace="w3" output="screen">
+        <param name="name_family" value="$(var name_family)"/>
+        <param name="name_actuator" value="$(var name_actuator_3)"/>
+    </node>
+
+    <node pkg="hebi_okblab" exec="command_velocity" name="command_velocity" namespace="w4" output="screen">
+        <param name="name_family" value="$(var name_family)"/>
+        <param name="name_actuator" value="$(var name_actuator_4)"/>
+    </node>
+        
+    <node pkg="hebi_okblab" exec="mecanum_velocity" name="mecanum_velocity" output="screen">
+        <param name="mecanum_width" value="0.47"/>
+        <param name="mecanum_length" value="0.34"/>
+        <param name="wheel_radius" value="0.075"/>
+        <param name="wheel_rotation_direction_1" value="-1"/>
+        <param name="wheel_rotation_direction_2" value="1"/>
+        <param name="wheel_rotation_direction_3" value="-1"/>
+        <param name="wheel_rotation_direction_4" value="1"/>
+    </node>
+
+    <!-- <node pkg="joy" exec="joy_node" name="joy_node" output="screen"/> -->
+    <node pkg="teleop_twist_keyboard" exec="teleop_twist_keyboard" name="teleop_twist_keyboard" output="screen" launch-prefix="gnome-terminal -- bash -lc">
+        <param name="scale_linear" value="0.1"/>
+        <param name="scale_angular" value="0.5"/>
+    </node>
+</launch>

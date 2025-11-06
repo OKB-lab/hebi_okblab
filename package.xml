@@ -11,6 +11,7 @@
 
   <depend>rclcpp</depend>
   <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
   <depend>hebi_cpp_api</depend>
 
   <!-- <buildtool_depend>eigen3_cmake_module</buildtool_depend>

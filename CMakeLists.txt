@@ -14,10 +14,13 @@ list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs)
 find_package(hebi_cpp_api)
+find_package(Eigen3 REQUIRED)
 
 add_executable(command_position src/command_position.cpp)
 add_executable(command_velocity src/command_velocity.cpp)
+add_executable(mecanum_velocity src/mecanum_velocity.cpp)
 
 ament_target_dependencies(
   command_position
@@ -30,11 +33,18 @@ ament_target_dependencies(
   rclcpp
   std_msgs
   hebi_cpp_api
+)
+ament_target_dependencies(
+  mecanum_velocity
+  rclcpp
+  std_msgs
+  geometry_msgs
 )
 
 install(TARGETS
   command_position
   command_velocity
+  mecanum_velocity
   DESTINATION lib/${PROJECT_NAME}
 )
 install(DIRECTORY
