@@ -35,10 +35,5 @@
         <param name="wheel_rotation_direction_3" value="-1"/>
         <param name="wheel_rotation_direction_4" value="1"/>
     </node>
-
-    <!-- <node pkg="joy" exec="joy_node" name="joy_node" output="screen"/> -->
-    <node pkg="teleop_twist_keyboard" exec="teleop_twist_keyboard" name="teleop_twist_keyboard" output="screen" launch-prefix="gnome-terminal -- bash -lc">
-        <param name="scale_linear" value="0.1"/>
-        <param name="scale_angular" value="0.5"/>
-    </node>
+    
 </launch>
